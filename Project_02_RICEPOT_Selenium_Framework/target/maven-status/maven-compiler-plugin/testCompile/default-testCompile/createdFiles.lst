@@ -1,0 +1,3 @@
+com\ricepot\tests\LoginInvalidTest.class
+com\ricepot\tests\LoginValidTest.class
+com\ricepot\base\BaseTest.class

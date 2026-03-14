@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Salesforce Login Test Suite]" guice-stage="DEVELOPMENT" verbose="0">
+  <test thread-count="5" name="Valid Login Tests(failed)" verbose="0">
+    <classes>
+      <class name="com.ricepot.tests.LoginValidTest">
+        <methods>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="initPage"/>
+          <include name="verifyValidLogin"/>
+        </methods>
+      </class> <!-- com.ricepot.tests.LoginValidTest -->
+    </classes>
+  </test> <!-- Valid Login Tests(failed) -->
+</suite> <!-- Failed suite [Salesforce Login Test Suite] -->
