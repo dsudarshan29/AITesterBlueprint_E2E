@@ -1,0 +1,11 @@
+Test ID,Scenario,Data Setup,Steps,Est. Time,Priority
+SCEN-001,Verify successful login with valid credentials,"User: testdemo@testai.com, Pass: Test@123","1. Navigate to app.vwo.com. 2. Enter email. 3. Enter password. 4. Click Login.",2 mins,High
+SCEN-002,Verify login with invalid email format,"User: invalid-email, Pass: Test@123","1. Navigate to app.vwo.com. 2. Enter invalid email. 3. Enter password. 4. Click Login.",2 mins,Medium
+SCEN-003,Verify login with incorrect password,"User: testdemo@testai.com, Pass: wrongpassword","1. Navigate to app.vwo.com. 2. Enter email. 3. Enter wrong password. 4. Click Login.",2 mins,High
+SCEN-004,Verify validation error for empty fields,"User: [empty], Pass: [empty]","1. Navigate to app.vwo.com. 2. Leave fields blank. 3. Click Login.",1 min,Medium
+SCEN-005,Verify SQL Injection protection,"User: ' OR '1'='1, Pass: test","1. Navigate to app.vwo.com. 2. Enter SQLi payload. 3. Click Login.",3 mins,High
+SCEN-006,Verify edge case handling for whitespace and casing,"User:   TESTDEMO@TESTAI.COM  , Pass: Test@123","1. Navigate to app.vwo.com. 2. Enter email with spaces/caps. 3. Click Login.",2 mins,Medium
+SCEN-007,Verify boundary values for maximum length inputs,"User: [256 char email], Pass: [129 char pass]","1. Navigate to app.vwo.com. 2. Enter max threshold strings. 3. Click Login.",3 mins,Medium
+SCEN-008,Verify rate limiting boundary on repeated failed attempts,"User: testdemo@testai.com, Pass: wrongpass (x5)","1. Attempt login 5 times. 2. Verify account lockout/CAPTCHA.",4 mins,High
+SCEN-009,Verify Cross-Site Scripting (XSS) vulnerability,"User: <script>alert(1)</script>, Pass: Test@123","1. Navigate to app.vwo.com. 2. Inject XSS payload. 3. Click Login. 4. Verify sanitization.",3 mins,High
+SCEN-010,Verify Secure Session Management (Cookies/Timeout),"User: testdemo@testai.com, Pass: Test@123","1. Navigate to app.vwo.com. 2. Log in. 3. Inspect cookies and idle timeout.",5 mins,High
