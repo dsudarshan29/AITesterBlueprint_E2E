@@ -1,0 +1,86 @@
+# QA Test Plan: VWO Platform
+
+**Test Plan ID:** TP-VWO-003  
+**Project Title:** VWO Digital Experience Optimization Platform Testing (app.vwo.com)  
+**Date:** March 20, 2026  
+**Document Owner:** Test Lead  
+**Version:** 3.0 (Aligned with comprehensive VWO PRD)  
+
+---
+
+## 1. Introduction
+This QA Test Plan outlines the testing strategy, activities, resources, and schedule for the quality validation of the newly redesigned VWO platform (`app.vwo.com`). The goal is to ensure a secure, intuitive, and highly efficient experimentation platform that serves as the entry point for CRO specialists, Product Managers, and digital marketers globally. 
+
+---
+
+## 2. Scope & Objectives
+
+### In-Scope
+The testing efforts will cover the core modules defined in the PRD:
+- **Core Authentication:** Secure login, real-time input validation, 2FA, and robust session management.
+- **Experimentation Engine:** A/B Testing workflows, multivariate testing, and SmartStats validation.
+- **Behavioral Insights:** Verifying Heatmaps and Session Recordings ingest correct telemetry.
+- **Integrations:** Ensuring Webhooks and APIs transmit accurately to Google Analytics, Mixpanel, and Salesforce.
+- **Performance:** Sub-2-second page load times for dashboards, millisecond latency for experiment delivery.
+- **Accessibility:** WCAG 2.1 AA compliance across core workflows.
+
+### Out-of-Scope
+- Back-end database administration (ClickHouse/Snowflake migrations).
+- Testing the actual proprietary CMS properties of end-customers (Shopify/Wordpress endpoints) beyond our integration hooks.
+
+### Objectives
+- Maintain sub-2-second page load speeds.
+- Ensure the application is securely processing large-scale behavioral event data.
+- Verify 99.9% uptime SLA conditions are met under heavy load simulation.
+- Achieve 90%+ user satisfaction ratings from Beta groups.
+
+---
+
+## 3. Test Strategy/Approach
+
+The testing effort uses a layered testing strategy involving:
+
+1. **Functional UI/UX Testing (Automated & Manual):**
+   - **Coverage:** Login flows, experiment creation wizard, personalized targeting setups.
+   - **Framework:** Selenium WebDriver / Playwright (React UI component validation).
+
+2. **Backend & API Testing:**
+   - **Focus:** Validating the REST APIs, Event Collection APIs, and the Bayesian statistical engine logic outputs.
+   
+3. **Security & Compliance Testing:**
+   - **Focus:** OWASP guidelines, GDPR/CCPA data tokenization, rate-limiting, and RBAC controls.
+   
+4. **Performance & Scalability Testing:**
+   - **Tooling:** Gatling / JMeter.
+   - **Focus:** Simulating concurrent experiment execution and massive clickstream data ingestion streams to Kafka pipelines.
+
+---
+
+## 4. Test Environment
+
+- **Staging URL:** Dedicated Kubernetes/Docker clustered environment mirroring AWS/GCP production topology.
+- **Operating Systems:** Windows 10/11, macOS.
+- **Browsers:** Google Chrome, Mozilla Firefox, Safari, Microsoft Edge.
+
+---
+
+## 5. Pass/Fail Criteria
+
+### Pass Criteria
+- Test cases yield the exact expected results per the PRD specifications.
+- Load constraints met consistently below 2000ms response.
+- No P1/P2 (Critical/High) functional or security defects.
+
+### Fail Criteria
+- Any user flow resulting in an unhandled exception or server 500 error.
+- Authentication bypassed or event tracking APIs dropping greater than 0.1% of payloads.
+
+---
+
+## 6. Deliverables
+1. **QA Test Plan Document** (This file).
+2. **Detailed Test Scenarios** & **Test Cases**.
+3. **Automated Test Scripts**.
+4. **Performance Benchmark Report**.
+5. **Requirements Traceability Matrix (RTM)**.
+6. **Defect Tracking Log & Bug Reports**.

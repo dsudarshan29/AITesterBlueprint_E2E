@@ -1,0 +1,73 @@
+# VWO Login Dashboard Bug Report
+**Bug ID**: BUG-001
+
+---
+
+## Template 1: Basic Bug Report (from Evidence)
+
+Title: Missing Field-Level Validation on Login Form Yields Generic Error
+Environment: Web Browser (app.vwo.com/#/login)
+Severity: Medium
+Steps to Reproduce: 
+1. Navigate to app.vwo.com
+2. Leave both the 'Enter email ID' and 'Enter password' text fields completely blank (TC-004), OR enter an invalid email format string (TC-002).
+3. Click on the purple "Sign in" button.
+Expected Result: The system should display distinct client-side field-level validation errors (e.g., "Email is required" or "Invalid format") immediately below the respective input fields.
+Actual Result: The system does not present explicit field validator messages. Instead, a generic global error banner "Your email, password, IP address or location did not match" is displayed at the top of the container.
+Evidence: 
+- vwo_bug_tracing WebP recording
+- click_feedback_1774027898371.png (Verifying empty fields submission state)
+
+---
+
+## Template 2: Bug Classification
+
+Severity: Medium
+Priority: High
+Justification: Field-level validation is a core UX pattern explicitly expected by modern web standards and PRD guidelines. While the user is strictly prevented from bypassing authentication (reducing security severity to Medium rather than Critical), the absence of explicit field feedback significantly impairs the user experience as users might be confused regarding exactly which formatting constraint failed.
+Missing Information: Does backend validation log these localized validation failures as brute force attempts, potentially triggering unnecessary CAPTCHAs due to empty submissions freely passing to the backend?
+
+---
+
+## Template 3: Bug Analysis (Chain-of-Thought)
+
+Step 1: Identify reported symptoms
+- The UI triggers a general authentication mismatch error instead of specific format or empty-field validation.
+- Affects Empty Fields (TC-004), Invalid Formats (TC-002), and XSS payloads (TC-015).
+
+Step 2: List verified facts from evidence
+- Clicking "Sign in" with empty fields yields: "Your email, password, IP address or location did not match".
+- There is no red text, border highlights, or specific instructional validation text under the email or password fields upon form submission.
+
+Step 3: Identify missing information
+- Is this a deliberate security design choice to intentionally obscure username enumeration, or just sparsely implemented client-side validation logic?
+
+Step 4: List possible causes
+- Hypothesis 1: Client-side validation logic (e.g. HTML5 'required' attribute, or React form state hooks) is completely absent on the frontend.
+- Hypothesis 2: A global error handler intercepts all 4xx authentication network requests strictly, overriding localized client-side UI error states.
+
+Step 5: Recommend next steps
+- Review the React component code for the Login Form to ensure robust form validation libraries (e.g., Formik/Yup) enforce correct UI styling before authorizing a network payload.
+
+---
+
+## Template 4: Bug Report Review
+
+Completeness Score: 6/6
+Missing Items: None (Title, Env, Steps, Expected/Actual Results, Evidence, and Severity are all present).
+Suggested Improvements: Include the exact Network API payload response. If the API returns a `400 Bad Request` vs a `401 Unauthorized` for empty fields, it could definitively pinpoint whether this is exclusively a UI layer issue or a backend validation processing issue.
+
+---
+
+## Template 5: Convert Notes to Bug Report
+
+Title: Generic Authentication Error Intercepts Basic Input Validation Flags
+Environment: Windows / Web Browser
+Severity: Medium
+Steps to Reproduce:
+1. Navigate to https://app.vwo.com
+2. Enter explicitly invalid inputs (e.g. an invalid string format or HTML test payload)
+3. Submit the form
+Expected Result: Form should clearly delineate if an input is explicitly breaking formatting constraints before initiating credential checks against the DB.
+Actual Result: Bypasses explicit field validation entirely to show a generic credential mismatch banner.
+Evidence Required: Network tab export showing the API response payload.

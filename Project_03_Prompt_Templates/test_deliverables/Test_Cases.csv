@@ -1,0 +1,20 @@
+TID,Category,Description,Pre-conditions,Steps,Expected,Priority
+TC-001,Functional,Login with valid credentials,Valid account exists,"1. Go to app.vwo.com 2. Enter email: testdemo@testai.com 3. Enter pass: Test@123 4. Click Login",User is logged in and redirected to dashboard,High
+TC-002,Negative,Login with invalid email format,None,"1. Go to app.vwo.com 2. Enter email: invalid_format 3. Enter pass: Test@123 4. Click Login",Validation error message for invalid email format is shown,Medium
+TC-003,Negative,Login with incorrect password,Valid account exists,"1. Go to app.vwo.com 2. Enter email: testdemo@testai.com 3. Enter pass: wrongpass 4. Click Login",Error message 'Invalid credentials' is shown,High
+TC-004,Negative,Login with empty fields,None,"1. Go to app.vwo.com 2. Leave email and password blank 3. Click Login",Validation errors appear under fields,Medium
+TC-005,Security,SQL Injection attempt in username,None,"1. Go to app.vwo.com 2. Enter email: ' OR '1'='1 3. Enter pass: test 4. Click Login",Login rejected and no access granted,High
+TC-006,Performance,Verify page load time,None,1. Navigate to app.vwo.com,Page loads in under 2 seconds,High
+TC-007,Accessibility,Verify keyboard navigation,None,"1. Navigate to app.vwo.com 2. Use Tab to navigate fields",All fields and buttons are accessible via keyboard,Medium
+TC-008,Functional,Verify 'Forgot Password' link,None,"1. Navigate to app.vwo.com 2. Click 'Forgot Password'",Redirected to password recovery page,Medium
+TC-009,Boundary,Maximum password length limit (e.g. 128 chars),None,"1. Navigate to app.vwo.com 2. Enter valid email 3. Enter 129-character password 4. Click Login",System restricts input to max boundary or shows explicit length error,Medium
+TC-010,Boundary,Maximum email length limit (e.g. 255 chars),None,"1. Navigate to app.vwo.com 2. Enter 256-character email 3. Enter valid password 4. Click Login",System restricts input to max boundary or shows validation error,Medium
+TC-011,Edge,Leading and trailing spaces in email address,Valid account exists,"1. Go to app.vwo.com 2. Enter email: '   testdemo@testai.com   ' 3. Enter pass: Test@123 4. Click Login",System automatically trims whitespace and successfully authenticates,High
+TC-012,Edge,Case-insensitivity on email address,Valid account exists,"1. Go to app.vwo.com 2. Enter email: TESTDEMO@TESTAI.COM 3. Enter pass: Test@123 4. Click Login",System treats email as case-insensitive and successfully authenticates,High
+TC-013,Boundary,Rate limit threshold trigger (e.g. 5th attempt),None,"1. Go to app.vwo.com 2. Attempt login with wrong password exactly 5 times",On the 5th attempt CAPTCHA is triggered or account is temporarily locked,High
+TC-014,Edge,Simultaneous login from multiple browsers,Valid account exists,"1. Go to app.vwo.com on Browser A and log in 2. Open Browser B and log in with same credentials",Both sessions are handled gracefully depending on concurrent session policies,Medium
+TC-015,Security,Cross-Site Scripting (XSS) payload in email,None,"1. Go to app.vwo.com 2. Enter email: <script>alert(1)</script> 3. Click Login",Input is sanitized or rejected; script does not execute,High
+TC-016,Security,Verify Secure and HttpOnly flags on session cookies,Valid account exists,"1. Go to app.vwo.com and log in 2. Inspect session cookies in browser DevTools",Authentication cookies have Secure and HttpOnly flags set to True,High
+TC-017,Security,Idle Session Timeout,Valid account exists,"1. Log into app.vwo.com 2. Leave the dashboard idle for 15 minutes",User is automatically logged out and redirected to login page,High
+TC-018,Security,Force HTTPS transmission,None,"1. Attempt to access http://app.vwo.com 2. Observe redirect",Application strictly redirects to HTTPS and transmits data securely,High
+TC-019,Security,Account lockout duration validation,Valid account exists,"1. Trigger lockout (5 failed attempts) 2. Wait 30 minutes 3. Attempt valid login",Account unlocks after the specified penalty duration,High

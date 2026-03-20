@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Execution Matrix - VWO Login Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .header { border-bottom: 2px solid #0056b3; padding-bottom: 10px; margin-bottom: 20px; }
+        .header h1 { color: #0056b3; margin: 0; font-size: 24px; }
+        .header p { margin: 5px 0; font-size: 14px; color: #666; }
+        .dashboard { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+        .card { flex: 1; min-width: 150px; background: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #ddd; }
+        .card h3 { margin: 0; font-size: 16px; color: #555; }
+        .card p { margin: 10px 0 0; font-size: 28px; font-weight: bold; }
+        .card.total p { color: #0056b3; }
+        .card.pass p { color: #28a745; }
+        .card.fail p { color: #dc3545; }
+        .card.blocked p { color: #fd7e14; }
+        .card.not-executed p { color: #6c757d; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #0056b3; color: white; }
+        tr:nth-child(even) { background: #f9f9f9; }
+        .status { padding: 5px 10px; border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 12px; }
+        .status.passed { background: #d4edda; color: #155724; }
+        .status.failed { background: #f8d7da; color: #721c24; }
+        .status.blocked { background: #ffeeba; color: #856404; }
+        .status.not-executed { background: #e2e3e5; color: #383d41; }
+        .footer { margin-top: 40px; text-align: center; font-size: 12px; color: #aaa; border-top: 1px solid #eee; padding-top: 10px; }
+        .progress-bar-container { background: #e9ecef; border-radius: 4px; overflow: hidden; height: 20px; margin-top: 5px; display: flex; }
+        .progress-bar.pass { background: #28a745; width: 63.2%; }
+        .progress-bar.fail { background: #dc3545; width: 26.3%; }
+        .progress-bar.blocked { background: #fd7e14; width: 0%; }
+        .progress-bar.not-executed { background: #6c757d; width: 10.5%; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Requirements Traceability Matrix (RTM) & Execution Report</h1>
+        <p><strong>Project Name:</strong> VWO Platform Testing</p>
+        <p><strong>Release:</strong> v3.0 | <strong>Status:</strong> Execution Progress Synced</p>
+        <p><strong>Prepared By:</strong> QA Team</p>
+        <p><strong>Requirement Coverage:</strong> 100% of Core PRD Modules Mapped</p>
+    </div>
+
+    <div class="dashboard">
+        <div class="card total">
+            <h3>Total Tests Created</h3>
+            <p>19</p>
+        </div>
+        <div class="card pass">
+            <h3>Passed</h3>
+            <p>12</p>
+        </div>
+        <div class="card fail">
+            <h3>Failed</h3>
+            <p>5</p>
+        </div>
+        <div class="card blocked">
+            <h3>Blocked</h3>
+            <p>0</p>
+        </div>
+        <div class="card not-executed">
+            <h3>Untested</h3>
+            <p>2</p>
+        </div>
+    </div>
+
+    <h2>Test Coverage & Execution Summary</h2>
+    <div class="progress-bar-container">
+        <div class="progress-bar pass" title="Passed: 63.2%"></div>
+        <div class="progress-bar fail" title="Failed: 26.3%"></div>
+        <div class="progress-bar blocked" title="Blocked: 0%"></div>
+        <div class="progress-bar not-executed" title="Untested: 10.5%"></div>
+    </div>
+
+    <h2>Execution Details</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Req ID</th>
+                <th>Requirement</th>
+                <th>Module</th>
+                <th>Test Case ID</th>
+                <th>Test Description</th>
+                <th>Status</th>
+                <th>Defect ID</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>REQ-001</td>
+                <td>Core Authentication (Email/password login)</td>
+                <td>Login</td>
+                <td>TC-001</td>
+                <td>Login with valid credentials</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Requirement</td>
+            </tr>
+            <tr>
+                <td>REQ-001</td>
+                <td>Core Authentication (Negative flows invalid format)</td>
+                <td>Login</td>
+                <td>TC-002</td>
+                <td>Login with invalid email format</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>BUG-001</td>
+                <td>Missing field validation; generic error</td>
+            </tr>
+            <tr>
+                <td>REQ-001</td>
+                <td>Core Authentication (Negative flows wrong password)</td>
+                <td>Login</td>
+                <td>TC-003</td>
+                <td>Login with incorrect password</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Requirement</td>
+            </tr>
+            <tr>
+                <td>REQ-001</td>
+                <td>Core Authentication (Empty fields)</td>
+                <td>Login</td>
+                <td>TC-004</td>
+                <td>Login with empty fields</td>
+                <td><span class="status failed">Failed</span></td>
+                <td>BUG-001</td>
+                <td>Missing field validation</td>
+            </tr>
+            <tr>
+                <td>REQ-002</td>
+                <td>Security & Authorization (Brute force protection)</td>
+                <td>Login</td>
+                <td>TC-005</td>
+                <td>SQL Injection attempt</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Requirement</td>
+            </tr>
+            <tr>
+                <td>REQ-006</td>
+                <td>Performance (Sub-2-second load times)</td>
+                <td>Performance</td>
+                <td>TC-006</td>
+                <td>Verify page load time</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Requirement</td>
+            </tr>
+            <tr>
+                <td>REQ-007</td>
+                <td>Accessibility (WCAG 2.1 AA)</td>
+                <td>UX</td>
+                <td>TC-007</td>
+                <td>Verify keyboard navigation</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Requirement</td>
+            </tr>
+            <tr>
+                <td>REQ-005</td>
+                <td>Account Recovery (Forgot password)</td>
+                <td>Recovery</td>
+                <td>TC-008</td>
+                <td>Verify 'Forgot Password' link</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Requirement</td>
+            </tr>
+            <tr>
+                <td>REQ-001</td>
+                <td>Core Auth (Boundary constraints)</td>
+                <td>Login</td>
+                <td>TC-009</td>
+                <td>Max password length limit</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Edge Case</td>
+            </tr>
+            <tr>
+                <td>REQ-001</td>
+                <td>Core Auth (Boundary constraints)</td>
+                <td>Login</td>
+                <td>TC-010</td>
+                <td>Max email length limit</td>
+                <td><span class="status not-executed">Not Executed</span></td>
+                <td>N/A</td>
+                <td>Untested Edge Case</td>
+            </tr>
+            <tr>
+                <td>REQ-001</td>
+                <td>Core Auth (Edge Case parsing)</td>
+                <td>Login</td>
+                <td>TC-011</td>
+                <td>Leading/trailing space trims</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Edge Case</td>
+            </tr>
+            <tr>
+                <td>REQ-001</td>
+                <td>Core Auth (Edge Case parsing)</td>
+                <td>Login</td>
+                <td>TC-012</td>
+                <td>Case-insensitivity on email</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Edge Case</td>
+            </tr>
+            <tr>
+                <td>REQ-002</td>
+                <td>Security (Rate Limiting Boundary)</td>
+                <td>Login</td>
+                <td>TC-013</td>
+                <td>Rate limit threshold trigger</td>
+                <td><span class="status failed">Failed</span></td>
+                <td>N/A</td>
+                <td>Untested Security Test</td>
+            </tr>
+            <tr>
+                <td>REQ-003</td>
+                <td>Session Management (Concurrency)</td>
+                <td>Login</td>
+                <td>TC-014</td>
+                <td>Simultaneous login from multiple browsers</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Security Test</td>
+            </tr>
+            <tr>
+                <td>REQ-002</td>
+                <td>Security (Input Sanitization)</td>
+                <td>Login</td>
+                <td>TC-015</td>
+                <td>Cross-Site Scripting (XSS) payload in email</td>
+                <td><span class="status failed">Failed</span></td>
+                <td>BUG-001</td>
+                <td>Generic error instead of explicit sanitization block</td>
+            </tr>
+            <tr>
+                <td>REQ-003</td>
+                <td>Security (Session Hardening)</td>
+                <td>Login</td>
+                <td>TC-016</td>
+                <td>Verify Secure and HttpOnly flags on session cookies</td>
+                <td><span class="status passed">Pass</span></td>
+                <td>N/A</td>
+                <td>Untested Security Test</td>
+            </tr>
+            <tr>
+                <td>REQ-003</td>
+                <td>Security (Session Management)</td>
+                <td>Login</td>
+                <td>TC-017</td>
+                <td>Idle Session Timeout</td>
+                <td><span class="status not-executed">Not Executed</span></td>
+                <td>N/A</td>
+                <td>Untested Security Test</td>
+            </tr>
+            <tr>
+                <td>REQ-004</td>
+                <td>Security (Data in Transit)</td>
+                <td>Login</td>
+                <td>TC-018</td>
+                <td>Force HTTPS transmission</td>
+                <td><span class="status failed">Failed</span></td>
+                <td>N/A</td>
+                <td>Untested Security Test</td>
+            </tr>
+            <tr>
+                <td>REQ-002</td>
+                <td>Security (Brute force protection)</td>
+                <td>Login</td>
+                <td>TC-019</td>
+                <td>Account lockout duration validation</td>
+                <td><span class="status failed">Failed</span></td>
+                <td>N/A</td>
+                <td>Untested Security Test</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        Confidential &copy; 2026 VWO. All rights reserved. | HTML Dashboard Synced to CSV
+    </div>
+</div>
+
+</body>
+</html>

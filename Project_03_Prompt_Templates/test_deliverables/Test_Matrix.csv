@@ -1,0 +1,27 @@
+Coverage Summary,,,,,,,,
+Total Requirements Mapped,15,,,,,,,
+% of Requirements Covered by Test Cases,100%,,,,,,,
+Untested Requirements Flagged,16 Test Cases (Pending Execution),,,,,,,
+Failed Test Cases,3 (Highlighted in Bug Triage),,,,,,,
+Blocked Test Cases,0,,,,,,,
+,,,,,,,,
+Req ID,Requirement Description,Module,Priority,Test Case ID,Test Case Description,Test Status,Defect ID,Remarks
+REQ-001,Core Authentication (Email/password login),Login,High,TC-001,Login with valid credentials,Pass,N/A,Untested Requirement
+REQ-001,Core Authentication (Negative flows invalid format),Login,Medium,TC-002,Login with invalid email format,Pass,BUG-001,Missing field validation; generic error
+REQ-001,Core Authentication (Negative flows wrong password),Login,High,TC-003,Login with incorrect password,Pass,N/A,Untested Requirement
+REQ-001,Core Authentication (Empty fields),Login,Medium,TC-004,Login with empty fields,Failed,BUG-001,Missing field validation
+REQ-002,Security (Brute force protection),Login,High,TC-005,SQL Injection attempt,Pass,N/A,Untested Requirement
+REQ-006,Performance (Sub-2-second load times),Performance,High,TC-006,Verify page load time,Pass,N/A,Untested Requirement
+REQ-007,Accessibility (WCAG 2.1 AA),UX,Medium,TC-007,Verify keyboard navigation,Pass,N/A,Untested Requirement
+REQ-005,Account Recovery (Forgot password),Recovery,Medium,TC-008,Verify 'Forgot Password' link,Pass,N/A,Untested Requirement
+REQ-001,Core Auth (Boundary constraints),Login,Medium,TC-009,Max password length limit,Pass,N/A,Untested Edge Case
+REQ-001,Core Auth (Boundary constraints),Login,Medium,TC-010,Max email length limit,Not Executed,N/A,Untested Edge Case
+REQ-001,Core Auth (Edge Case parsing),Login,High,TC-011,Leading/trailing space trims,Pass,N/A,Untested Edge Case
+REQ-001,Core Auth (Edge Case parsing),Login,High,TC-012,Case-insensitivity on email,Pass,N/A,Untested Edge Case
+REQ-002,Security (Rate Limiting Boundary),Login,High,TC-013,Rate limit threshold trigger,Failed,N/A,Untested Security Test
+REQ-003,Session Management (Concurrency),Login,Medium,TC-014,Simultaneous login from multiple browsers,Pass,N/A,Untested Security Test
+REQ-002,Security (Input Sanitization),Login,High,TC-015,Cross-Site Scripting (XSS) payload in email,Failed,BUG-001,Generic error instead of explicit sanitization block
+REQ-003,Security (Session Hardening),Login,High,TC-016,Verify Secure and HttpOnly flags on session cookies,Pass,N/A,Untested Security Test
+REQ-003,Security (Session Management),Login,High,TC-017,Idle Session Timeout,Not Executed,N/A,Untested Security Test
+REQ-004,Security (Data in Transit),Login,High,TC-018,Force HTTPS transmission,Failed,N/A,Untested Security Test
+REQ-002,Security (Brute force protection),Login,High,TC-019,Account lockout duration validation,Failed,N/A,Untested Security Test
