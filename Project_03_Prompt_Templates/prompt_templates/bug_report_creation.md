@@ -25,6 +25,7 @@ Expected Result: [From requirements or UNKNOWN]
 Actual Result: [From evidence]
 Evidence: [List attachments]
 
+
 EVIDENCE:
 <<<
 [PASTE SCREENSHOT DESCRIPTION / LOGS]
