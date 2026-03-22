@@ -20,8 +20,8 @@ const getSettings = () => {
     const data = fs.readFileSync(SETTINGS_FILE, 'utf-8');
     return JSON.parse(data);
   }
-  return { ollamaUrl: 'http://localhost:11434', ollamaModel: '', groqApiKey: '', openAiApiKey: '' };
-};
+  return { ollamaUrl: 'http://localhost:11434', ollamaModel: '', groqApiKey: '', openAiApiKey: '', provider: 'ollama' };
+}
 
 // GET /api/settings
 app.get('/api/settings', (req, res) => {
@@ -44,9 +44,29 @@ app.post('/api/settings/test', async (req, res) => {
       // Simple list models request to test connection
       const models = await ollama.list();
       return res.json({ status: 'success', message: 'Connected to Ollama', models: models.models.length });
+    } else if (provider === 'groq') {
+      const response = await fetch('https://api.groq.com/openai/v1/models', {
+        headers: { Authorization: `Bearer ${config.groqApiKey}` }
+      });
+      if (response.ok) {
+        return res.json({ status: 'success', message: 'Connected to Groq successfully' });
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(`Groq API Error: ${response.status} ${JSON.stringify(errorData)}`);
+      }
+    } else if (provider === 'openai') {
+      const response = await fetch('https://api.openai.com/v1/models', {
+        headers: { Authorization: `Bearer ${config.openAiApiKey}` }
+      });
+      if (response.ok) {
+        return res.json({ status: 'success', message: 'Connected to OpenAI successfully' });
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(`OpenAI API Error: ${response.status} ${JSON.stringify(errorData)}`);
+      }
+    } else {
+      res.json({ status: 'success', message: `Simulated connection to ${provider}` });
     }
-    // TODO: Add Groq, OpenAI test connections
-    res.json({ status: 'success', message: `Simulated connection to ${provider}` });
   } catch (error: any) {
     res.status(500).json({ status: 'error', message: error.message });
   }
@@ -74,9 +94,7 @@ app.post('/api/generate', async (req, res) => {
 
   try {
     const settings = getSettings();
-    const ollamaUrl = settings.ollamaUrl || 'http://localhost:11434';
-    const ollama = new Ollama({ host: ollamaUrl });
-
+    const provider = settings.provider || 'ollama';
     const systemPrompt = `You are an expert QA tester. Create comprehensive test cases based on the given requirement.
 You MUST output the test cases in a standard Jira format, including both Functional and Non-Functional test cases.
 Format each test case exactly like this:
@@ -91,17 +109,65 @@ Priority: [High/Medium/Low]
 
 Generate the test cases clearly. Do not output anything else.`;
 
-    const modelName = settings.ollamaModel || 'llama2';
+    let finalContent = '';
 
-    const response = await ollama.chat({
-      model: modelName,
-      messages: [
-         { role: 'system', content: systemPrompt },
-         { role: 'user', content: `Requirement: ${requirement}` }
-      ],
-    });
+    if (provider === 'groq') {
+      const gRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${settings.groqApiKey}`
+        },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: `Requirement: ${requirement}` }
+          ]
+        })
+      });
+      if (!gRes.ok) {
+        const errText = await gRes.text();
+        throw new Error(`Groq API Error: ${gRes.status} ${errText}`);
+      }
+      const gData: any = await gRes.json();
+      finalContent = gData.choices[0].message.content;
+    } else if (provider === 'openai') {
+      const oRes = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${settings.openAiApiKey}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: `Requirement: ${requirement}` }
+          ]
+        })
+      });
+      if (!oRes.ok) {
+        const errText = await oRes.text();
+        throw new Error(`OpenAI API Error: ${oRes.status} ${errText}`);
+      }
+      const oData: any = await oRes.json();
+      finalContent = oData.choices[0].message.content;
+    } else {
+      const ollamaUrl = settings.ollamaUrl || 'http://localhost:11434';
+      const ollama = new Ollama({ host: ollamaUrl });
+      const modelName = settings.ollamaModel || 'llama2';
+      const response = await ollama.chat({
+        model: modelName,
+        messages: [
+           { role: 'system', content: systemPrompt },
+           { role: 'user', content: `Requirement: ${requirement}` }
+        ],
+      });
+      finalContent = response.message.content;
+    }
 
-    res.json({ status: 'success', testCases: response.message.content });
+    res.json({ status: 'success', testCases: finalContent });
   } catch (error: any) {
     console.error('Generation Error:', error);
     res.status(500).json({ status: 'error', message: error.message });

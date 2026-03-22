@@ -8,6 +8,7 @@ export const Settings = () => {
   const [modelsLoading, setModelsLoading] = useState(false);
   const [groqKey, setGroqKey] = useState('');
   const [openAiKey, setOpenAiKey] = useState('');
+  const [provider, setProvider] = useState('ollama');
   const [statusMsg, setStatusMsg] = useState('');
 
   const fetchModels = async () => {
@@ -39,6 +40,7 @@ export const Settings = () => {
         setOllamaModel(data.ollamaModel || '');
         setGroqKey(data.groqApiKey || '');
         setOpenAiKey(data.openAiApiKey || '');
+        setProvider(data.provider || 'ollama');
       })
       .catch((err) => console.error('Error loading settings', err));
     
@@ -51,7 +53,7 @@ export const Settings = () => {
       const res = await fetch('http://localhost:3001/api/settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ollamaUrl, ollamaModel, groqApiKey: groqKey, openAiApiKey: openAiKey }),
+        body: JSON.stringify({ ollamaUrl, ollamaModel, groqApiKey: groqKey, openAiApiKey: openAiKey, provider }),
       });
       const data = await res.json();
       setStatusMsg(data.message || 'Saved successfully');
@@ -83,6 +85,20 @@ export const Settings = () => {
         <h2 className="text-2xl font-semibold mb-8 text-slate-800 tracking-tight">API Configurations</h2>
         
         <div className="space-y-6">
+          {/* Active Provider Selection */}
+          <div className="flex flex-col gap-2 p-4 bg-indigo-50 rounded-xl border border-indigo-100">
+            <label className="text-sm font-semibold text-indigo-900">Active AI Provider (Used for Generator)</label>
+            <select
+              value={provider}
+              onChange={(e) => setProvider(e.target.value)}
+              className="px-4 py-3 rounded-xl border border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all bg-white text-slate-700 font-medium"
+            >
+              <option value="ollama">Ollama (Local)</option>
+              <option value="groq">Groq (Cloud)</option>
+              <option value="openai">OpenAI (Cloud)</option>
+            </select>
+          </div>
+
           {/* Ollama Setting */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-slate-600">Ollama API URL</label>
