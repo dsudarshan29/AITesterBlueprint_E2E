@@ -1,6 +1,7 @@
 {
   "ollamaUrl": "http://localhost:11434",
-  "ollamaModel": "gemma3:1b",
-  "groqApiKey": "",
-  "openAiApiKey": ""
+  "ollamaModel": "",
+  "groqApiKey": "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",
+  "openAiApiKey": "",
+  "provider": "groq"
 }
