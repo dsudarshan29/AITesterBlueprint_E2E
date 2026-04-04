@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 226 43% 7%;  /* Deep Navy */
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 235 86% 65%; /* Indigo */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 32% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 235 86% 65%;
+
+    --radius: 0.75rem;
+
+    /* Custom Gradients/Borders matching Figma spec */
+    --glow-wishlist: 271 81% 56%;  /* Purple */
+    --glow-applied: 217 91% 60%;   /* Blue */
+    --glow-followup: 38 92% 50%;   /* Yellow */
+    --glow-interview: 160 84% 39%; /* Green */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  
+  /* Force dark mode styling structurally since design specifies it strictly */
+  html {
+     background-color: hsl(var(--background));
+     color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: theme('colors.background');
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: theme('colors.muted.DEFAULT');
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.secondary.DEFAULT');
+  }
+}
